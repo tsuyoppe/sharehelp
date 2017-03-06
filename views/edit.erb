@@ -3,6 +3,12 @@
     <form action="/renew/<%= @content.id %>" method="post" enctype="multipart/form-data">
         <input type="text" name="user_name" value="<%= @content.name %>">
         <input type="text" name="body" value="<%= @content.body %>">
+        <label for="categories">コース名</label>
+            <select id="categories" name="category">
+                <% @categories.each do |c| %>
+                    <option value="<%= c.id %>" <%= "selected" if c.id == @content.category_id %>><%= c.category %></option>
+                <% end %>
+            </select>
         <input type="submit" value="編集完了">
     </form>
     </div>

@@ -7,6 +7,13 @@
         <p>名前<input type="text" name="user_name"></p>
         <p>コメント<input type="text" name="body"></p>
         <input type="file" name="file">
+        <label for="categories">カテゴリ</label>
+        <select id="categories" name="category">
+            <!-- カテゴリに関する記述はここに -->
+            <% @categories.each do |c| %>
+            <option value="<%= c.id %>"><%= c.category %></option>
+            <% end %>
+        </select>
         <input type="submit" value="投稿">
     </form>
     </div>
@@ -21,6 +28,17 @@
                         <h3><%= content.name %></h3>
                         <p><%= content.body %></p>
                         </section>
+                        <label for="categories">カテゴリ</label>
+                        <select id="categories" name="category">
+                        <span>
+                        <% @categories.each do |c| %>
+                            <option value="<%= c.id %>"><%= c.category %></option>
+                        <%= c.category %><%= c.id %>
+                        <% end %>
+                        
+                        </span>
+                        </select>
+                        
                         <% unless content.img.empty? %>
                         <object data="<%= content.img %>" type="application/pdf" ></object><br>
                         <% end %>
