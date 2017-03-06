@@ -10,5 +10,7 @@ class User < ActiveRecord::Base
 end
 
 class Contribution < ActiveRecord::Base
+end
 
+class Category < ActiveRecord::Base
 end

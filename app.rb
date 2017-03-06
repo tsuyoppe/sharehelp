@@ -9,6 +9,7 @@ require './models'
 enable :sessions
 
 get '/' do
+    @categories = Category.all
     @contents = Contribution.order('id desc').all
     erb :index
 end
@@ -55,7 +56,8 @@ post '/new' do
         body: params[:body],
         img: "",
         good: 0,
-        bad: 0
+        bad: 0,
+        category_id: params[:category]
     })
     
     if params[:file]
@@ -65,14 +67,42 @@ post '/new' do
     redirect '/'
 end
 
-post '/delete/:id' do
-    Contribution.find(params[:id]).destroy
+#特定の投稿を削除するときの処理
+get '/delete/:id' do
+    @content = Contribution.find_by({id: params[:id]})
+    unless @content.nil?
+        @content.destroy
+        redirect '/'
+    end
+
     redirect '/'
 end
 
-post '/edit/:id' do
-    @content = Contribution.find(params[:id])
+# 特定の投稿を編集するときの処理
+get '/edit/:id' do
+    @categories = Category.all
+    @content = Contribution.find_by({id: params[:id]})
+    if @content.nil?
+        redirect '/'
+    end
+
     erb :edit
+end
+
+# 特定の投稿を更新するときの処理
+post '/edit/:id' do
+    @content = Contribution.find_by({id: params[:id]})
+    if @content.nil?
+        redirect '/'
+    end
+    @content.update({
+        name:        params[:name],
+        body:        params[:body],
+        category_id: params[:category],
+    })
+    @content.save
+
+    redirect '/'
 end
 
 post '/renew/:id' do
@@ -100,4 +130,17 @@ post '/bad/:id' do
         bad: bad + 1
     })
     redirect '/'
+end
+
+# メモをカテゴリ分類して表示するときの処理
+get '/categories/:id' do
+    @categories = Category.all
+    @category = @categories.find_by({id: params[:id]})
+    if @category.nil?
+        @content = []
+    else
+        @content = @category.contents
+    end
+
+    erb :index
 end
