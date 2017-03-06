@@ -1,0 +1,12 @@
+<% unless session[:user] %>
+    <a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br>
+    <h2>未ログイン</h2>
+<% else %>
+    <a href="/signout">ログアウト</a>
+    <form method="post" action="upload.rb" enctype="multipart/form-data">
+        アップロードしたいファイル : <input type="FILE" name="file"><br>
+  コメント : <input type="text" name="comment" size="40"><br>
+  <input type="submit" name="upload" value="アップロードする">
+</form>
+    <h2><%= User.find(session[:user]).mail %>としてログイン</h2>
+<% end %>
