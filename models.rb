@@ -8,3 +8,6 @@ class User < ActiveRecord::Base
     validates :password,
         length: {in: 5..10}
 end
+
+class Contribution < ActiveRecord::Base
+end

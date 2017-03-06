@@ -7,6 +7,7 @@ require './models'
 enable :sessions
 
 get '/' do
+    @contents = Contribution.order('id desc').all
     erb :index
 end
 
@@ -37,5 +38,14 @@ end
 
 get '/signout' do
     session[:user] = nil
+    redirect '/'
+end
+
+post '/new' do
+    Contribution.create({
+        name: params[:user_name],
+        body: params[:body]
+    })
+    
     redirect '/'
 end
