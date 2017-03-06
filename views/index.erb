@@ -18,6 +18,18 @@
                 <% unless content.img.empty? %>
                 <object data="<%= content.img %>" type="application/pdf" ></object>
                 <% end %>
+                <span><%= content.good %></span>
+                <span>
+                    <form action="/good/<%= content.id %>" method="post">
+                    <input type="submit" value="いいね">
+                    </form>
+                </span>
+                <span><%= content.bad %></span>
+                <span>
+                    <form action="/bad/<%= content.id %>" method="post">
+                    <input type="submit" value="よくないね">
+                    </form>
+                </span>                
                 <span>
                     <form action="/delete/<%= content.id %>" method="post">
                         <input type="submit" value="削除">

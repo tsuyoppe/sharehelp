@@ -53,7 +53,9 @@ post '/new' do
     Contribution.create({
         name: params[:user_name],
         body: params[:body],
-        img: ""
+        img: "",
+        good: 0,
+        bad: 0
     })
     
     if params[:file]
@@ -82,3 +84,20 @@ post '/renew/:id' do
     redirect  '/'
 end
 
+post '/good/:id' do
+    @content = Contribution.find(params[:id])
+    good = @content.good
+    @content.update({
+        good: good + 1
+    })
+    redirect '/'
+end
+
+post '/bad/:id' do
+    @content = Contribution.find(params[:id])
+    bad = @content.bad
+    @content.update({
+        bad: bad + 1
+    })
+    redirect '/'
+end
