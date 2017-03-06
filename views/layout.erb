@@ -14,4 +14,20 @@
     <script src="/js/semantic.min.js"></script>
 </head>
 <body>
+            <div class="custom-menu-wrapper">
+            <div class="pure-menu custom-menu custom-menu-top">
+                <a href="/" class="pure-menu-heading custom-menu-brand">ShareHelp</a>
+                <a href="#" class="custom-menu-toggle" id="toggle"><s class="bar"></s><s class="bar"></s></a>
+            </div>
+            <div class="pure-menu pure-menu-horizontal pure-menu-scrollable custom-menu custom-menu-bottom custom-menu-tucked" id="tuckedMenu">
+                <div class="custom-menu-screen"></div>
+                <ul class="pure-menu-list">
+                    <!-- カテゴリメニューの記述はこのulタグ内に -->
+                    <!-- 下のliタグを参考に各カテゴリ用のliを追加しよう -->
+                    <% @categories.each do |c| %>
+                        <li class="pure-menu-item"><a href="/categories/<%= c.id %>" class="pure-menu-link"><%= c.name %></a></li>
+                    <% end %>
+                </ul>
+            </div>
+            </div>
     <%= yield %>

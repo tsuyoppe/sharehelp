@@ -1,20 +1,3 @@
-<body>
-        <div class="custom-menu-wrapper">
-            <div class="pure-menu custom-menu custom-menu-top">
-                <a href="/" class="pure-menu-heading custom-menu-brand">ShareHelp</a>
-                <a href="#" class="custom-menu-toggle" id="toggle"><s class="bar"></s><s class="bar"></s></a>
-            </div>
-            <div class="pure-menu pure-menu-horizontal pure-menu-scrollable custom-menu custom-menu-bottom custom-menu-tucked" id="tuckedMenu">
-                <div class="custom-menu-screen"></div>
-                <ul class="pure-menu-list">
-                    <!-- カテゴリメニューの記述はこのulタグ内に -->
-                    <!-- 下のliタグを参考に各カテゴリ用のliを追加しよう -->
-                    <% @categories.each do |c| %>
-                        <li class="pure-menu-item"><a href="/categories/<%= c.id %>" class="pure-menu-link"><%= c.name %></a></li>
-                    <% end %>
-                </ul>
-            </div>
-</div>
 <% unless session[:user] %>
     <a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br>
     <h2>未ログイン</h2>
@@ -51,15 +34,6 @@
                             <input type="submit" value="よくないね"><%= content.bad %>
                             </form>
                         </span>   
-                        <div class="edit">
-                            <form action="/delete/<%= content.id %>" method="post">
-                                <input type="submit" value="削除">
-                            </form> 
-                            <form action="/edit/<%= content.id %>" method="post">
-                                <input type="submit" value="編集">
-                            </form>
-                        </div>
-                        
                         <div class="extra content">
                             <div class="ui two buttons">
                                 <!-- メモの編集・削除に関しては下記を編集 -->
@@ -73,6 +47,5 @@
             <% end %>
     </ul>
 <% end %>
-</main>
 </body>
 </html>
