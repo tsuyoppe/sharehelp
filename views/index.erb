@@ -33,8 +33,8 @@
                         <span>
                         <% @categories.each do |c| %>
                             <option value="<%= c.id %>"><%= c.category %></option>
-                        <%= c.category %><%= c.id %>
                         <% end %>
+                        <%= content.category.category%>
                         
                         </span>
                         </select>
@@ -42,6 +42,7 @@
                         <% unless content.img.empty? %>
                         <object data="<%= content.img %>" type="application/pdf" ></object><br>
                         <% end %>
+
                         <span>
                             <form action="/good/<%= content.id %>" method="post">
                             <input type="submit" value="いいね"><%= content.good %>

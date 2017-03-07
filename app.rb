@@ -35,6 +35,7 @@ end
 
 #postサインアップ用
 post '/signup' do
+    @categories = Category.all
     @user = User.create(mail:params[:mail],password:params[:password],
         password_confirmation:params[:password_confirmation])
     if @user.persisted?
@@ -51,13 +52,15 @@ end
 
 
 post '/new' do
+    @categories = Category.all
     Contribution.create({
         name: params[:user_name],
         body: params[:body],
         img: "",
         good: 0,
         bad: 0,
-        category_id: params[:category]
+        category_id: params[:category],
+        user_id: params[:user]
     })
     
     if params[:file]
@@ -137,10 +140,10 @@ get '/categories/:id' do
     @categories = Category.all
     @category = @categories.find_by({id: params[:id]})
     if @category.nil?
-        @content = []
+        @contents = []
     else
-        @content = @category.contents
+        @contents = @category.contributions
     end
-
+    
     erb :index
 end
