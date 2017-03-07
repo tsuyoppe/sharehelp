@@ -4,8 +4,8 @@
 <% else %>
     <div id="form-box">
     <form action="/new" method="post" enctype="multipart/form-data">
-        <p>名前<input type="text" name="user_name"></p>
-        <p>コメント<input type="text" name="body"></p>
+        <input type="text" name="user_name" placeholder="名前"></p>
+        <textarea name="body" cols="30" rows="10" placeholder="コメント"></textarea>
         <input type="file" name="file">
         <label for="categories">カテゴリ</label>
         <select id="categories" name="category">
