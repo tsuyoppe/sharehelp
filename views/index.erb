@@ -52,7 +52,8 @@
                             <form action="/bad/<%= content.id %>" method="post">
                             <input type="submit" value="よくないね"><%= content.bad %>
                             </form>
-                        </span>   
+                        </span>
+                        <% if content.user_id == session[:user] %> 
                         <div class="extra content">
                             <div class="ui two buttons">
                                 <!-- メモの編集・削除に関しては下記を編集 -->
@@ -60,6 +61,7 @@
                                 <a class="ui basic red button" href="/delete/<%= content.id %>">Delete</a>
                             </div>
                         </div>
+                        <% end %>
                     </li>
                 </figure>
             </article>

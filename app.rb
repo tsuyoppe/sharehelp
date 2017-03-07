@@ -11,16 +11,18 @@ enable :sessions
 get '/' do
     @categories = Category.all
     @contents = Contribution.order('id desc').all
+    @content = Contribution.find_by({id: params[:id]})
     erb :index
 end
 
 #getサインイン用
 get '/signin' do
+    @categories = Category.all
     erb :sign_in
 end
 
 #postサインイン用
-post '/signin' do 
+post '/signin' do
     user = User.find_by(mail: params[:mail])
     if user && user.authenticate(params[:password])
         session[:user] = user.id
@@ -30,12 +32,12 @@ end
 
 #getサインアップ用
 get '/signup' do
+    @categories = Category.all
     erb :sign_up
 end
 
 #postサインアップ用
 post '/signup' do
-    @categories = Category.all
     @user = User.create(mail:params[:mail],password:params[:password],
         password_confirmation:params[:password_confirmation])
     if @user.persisted?
@@ -60,7 +62,7 @@ post '/new' do
         good: 0,
         bad: 0,
         category_id: params[:category],
-        user_id: params[:user]
+        user_id: session[:user]
     })
     
     if params[:file]
@@ -72,12 +74,14 @@ end
 
 #特定の投稿を削除するときの処理
 get '/delete/:id' do
+    @categories = Category.all
     @content = Contribution.find_by({id: params[:id]})
-    unless @content.nil?
+    if @content.user_id == session[:user]
+        unless @content.nil?
         @content.destroy
         redirect '/'
+        end
     end
-
     redirect '/'
 end
 
@@ -88,8 +92,11 @@ get '/edit/:id' do
     if @content.nil?
         redirect '/'
     end
-
+    if @content.user_id == session[:user]
     erb :edit
+    else
+        redirect '/'
+    end
 end
 
 # 特定の投稿を更新するときの処理
