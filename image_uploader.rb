@@ -21,7 +21,7 @@ def image_upload_local(img)
     img_path = "/images/bbs/#{img_name}"
     contents.update_attribute(:img, img_path)
 
-    save_path = File.join('public', 'images', 'bbs', img_name)
+    save_path = File.join('private', 'images', 'bbs', img_name)
 
     File.open(save_path, 'wb') do |f|
      logger.info "Temp file: #{img[:tempfile]}"

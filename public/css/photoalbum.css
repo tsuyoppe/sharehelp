@@ -271,6 +271,28 @@ main article:hover .edit {
 @media only screen and (max-width: 500px) {
   main .form-box form {
     width: 100%;
+    
   }
 }
 /* Created by Kosei Himeno. Last Update 2015 June */
+
+.flex-container{
+  justify-content:         space-between;
+  display: flex;
+  flex-direction:          row;
+  flex-wrap:               wrap;
+  align-items:             stretch;
+  align-content:           stretch;
+}
+
+.flex-container item {
+  -webkit-flex: 1;
+  flex: 1;
+  width:                   32%;
+  height: auto;
+  
+  
+}
+.flex-container object{
+
+}

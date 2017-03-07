@@ -22,22 +22,22 @@
     <h2><%= User.find(session[:user]).mail %>としてログイン</h2>
     <a href="/signout">ログアウト</a>
     <main>
+        <div class="flex-container">
         <% @contents.each do |content| %>
-            <article>
-                <figure>
+            <div class="item">
+                <!--<figure> -->
                 <% if content.user_id == session[:user] %> 
-                    <div class="edit">
+                    <!-- <div class="edit">-->
                     <form action="/edit/<%= content.id %>" method="get"><input type="submit" value="編集"></form>
                     <form action="/delete/<%= content.id %>" method="get"><input type="submit" value="削除"></form>
-                    </div>
+                    <!--</div> -->
                     <% unless content.img.empty? %><object data="<%= content.img %>" type="application/pdf" alt=""></object><% end %>
                 <% end %>
-                </figure>
+                <!-- </figure> -->
                 <section>
                     <h3><%= content.name %></h3>
                     <p><%= content.body %></p>
                 </section>
-            </article>
                <!-- <label for="categories">カテゴリ</label>
                 <select id="categories" name="category">
                 < % @categories.each do |c| %>
@@ -46,9 +46,9 @@
                 <!--< %= content.category.category %> -->
                <!-- </select> -->
         
-                <!--    < % unless content.img.empty? %>
-                    <object data="< %= content.img %>" type="application/pdf" ></object><br>
-                    < % end %> -->
+                <% unless content.img.empty? %>
+                    <object data="<%= content.img %>" type="application/pdf" ></object><br>
+                <% end %>
 
                 <form action="/good/<%= content.id %>" method="post">
                 <input type="submit" value="いいね"><%= content.good %>
@@ -65,6 +65,7 @@
                         </div>
                     </div>
                     < % end %> -->
+        </div>
         <% end %>
         </main>
     <% end %>
