@@ -2,71 +2,71 @@
     <a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br>
     <h2>未ログイン</h2>
 <% else %>
-    <div id="form-box">
-    <form action="/new" method="post" enctype="multipart/form-data">
-        <input type="text" name="user_name" placeholder="名前">
-        <textarea name="body" cols="30" rows="10" placeholder="コメント"></textarea>
-        <input type="file" name="file">
-        <label for="categories">カテゴリ</label>
-        <select id="categories" name="category">
-            <!-- カテゴリに関する記述はここに -->
-            <% @categories.each do |c| %>
-            <option value="<%= c.id %>"><%= c.category %></option>
-            <% end %>
-        </select>
-        <input type="submit" value="投稿">
-    </form>
-    </div>
+    <header>
+        <div id="form-box">
+        <form action="/new" method="post" enctype="multipart/form-data">
+            <input type="text" name="user_name" placeholder="名前">
+            <textarea name="body" cols="30" rows="10" placeholder="コメント"></textarea>
+            <input type="file" name="file">
+            <label for="categories">カテゴリ</label>
+            <select id="categories" name="category">
+                <!-- カテゴリに関する記述はここに -->
+                <% @categories.each do |c| %>
+                <option value="<%= c.id %>"><%= c.category %></option>
+                <% end %>
+            </select>
+            <input type="submit" value="投稿">
+        </form>
+        </div>
+    </header>
     <h2><%= User.find(session[:user]).mail %>としてログイン</h2>
     <a href="/signout">ログアウト</a>
-    <ul>
-            <% @contents.each do |content| %>
+    <main>
+        <% @contents.each do |content| %>
             <article>
                 <figure>
-                    <li>
-                        <section>
-                        <h3><%= content.name %></h3>
-                        <p><%= content.body %></p>
-                        </section>
-                        <label for="categories">カテゴリ</label>
-                        <select id="categories" name="category">
-                        <span>
-                        <% @categories.each do |c| %>
-                            <option value="<%= c.id %>"><%= c.category %></option>
-                        <% end %>
-                        <%= content.category.category%>
-                        
-                        </span>
-                        </select>
-                        
-                        <% unless content.img.empty? %>
-                        <object data="<%= content.img %>" type="application/pdf" ></object><br>
-                        <% end %>
-
-                        <span>
-                            <form action="/good/<%= content.id %>" method="post">
-                            <input type="submit" value="いいね"><%= content.good %>
-                            </form>
-                        </span>
-                        <span>
-                            <form action="/bad/<%= content.id %>" method="post">
-                            <input type="submit" value="よくないね"><%= content.bad %>
-                            </form>
-                        </span>
-                        <% if content.user_id == session[:user] %> 
-                        <div class="extra content">
-                            <div class="ui two buttons">
-                                <!-- メモの編集・削除に関しては下記を編集 -->
-                                <a class="ui basic blue button" href="/edit/<%= content.id %>">Edit</a>
-                                <a class="ui basic red button" href="/delete/<%= content.id %>">Delete</a>
-                            </div>
-                        </div>
-                        <% end %>
-                    </li>
+                <% if content.user_id == session[:user] %> 
+                    <div class="edit">
+                    <form action="/edit/<%= content.id %>" method="get"><input type="submit" value="編集"></form>
+                    <form action="/delete/<%= content.id %>" method="get"><input type="submit" value="削除"></form>
+                    </div>
+                    <% unless content.img.empty? %><object data="<%= content.img %>" type="application/pdf" alt=""></object><% end %>
+                <% end %>
                 </figure>
+                <section>
+                    <h3><%= content.name %></h3>
+                    <p><%= content.body %></p>
+                </section>
             </article>
-            <% end %>
-    </ul>
-<% end %>
+               <!-- <label for="categories">カテゴリ</label>
+                <select id="categories" name="category">
+                < % @categories.each do |c| %>
+                    <option value="< %= c.id %>">< %= c.category %></option>
+                < % end %>
+                <!--< %= content.category.category %> -->
+               <!-- </select> -->
+        
+                <!--    < % unless content.img.empty? %>
+                    <object data="< %= content.img %>" type="application/pdf" ></object><br>
+                    < % end %> -->
+
+                <form action="/good/<%= content.id %>" method="post">
+                <input type="submit" value="いいね"><%= content.good %>
+                </form>
+                <form action="/bad/<%= content.id %>" method="post">
+                <input type="submit" value="よくないね"><%= content.bad %>
+                </form>
+<!--                    < % if content.user_id == session[:user] %> 
+                    <div class="extra content">
+                        <div class="ui two buttons">
+                            <!-- メモの編集・削除に関しては下記を編集 --
+                            <a class="ui basic blue button" href="/edit/< %= content.id %>">Edit</a>
+                            <a class="ui basic red button" href="/delete/< %= content.id %>">Delete</a>
+                        </div>
+                    </div>
+                    < % end %> -->
+        <% end %>
+        </main>
+    <% end %>
 </body>
 </html>
