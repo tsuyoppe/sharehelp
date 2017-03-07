@@ -3,6 +3,7 @@ Category.create([
         {category: 'Android'},
         {category: 'WebD'},
         {category: 'WebS'},
+        {category: 'Unity'},
         {category: 'Movie'},
         {category: 'IoT'},
 ])
